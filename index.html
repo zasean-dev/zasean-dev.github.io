@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vxcyber</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind Configuration
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    // Add any theme customization here
+                }
+            }
+        }
+    </script>
+    <!-- Add custom styles -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            /* Add any custom utilities here */
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="min-h-screen bg-gradient-to-b from-[#f0f9f9] to-white dark:from-gray-900 dark:to-gray-800 flex flex-col items-center justify-center p-4 transition-colors duration-300 font-sans">
+        <button
+            id="darkModeToggle"
+            class="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors duration-300"
+            aria-label="Toggle dark mode"
+        >
+            <!-- Moon Icon (shows in light mode) -->
+            <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="block dark:hidden">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <!-- Sun Icon (shows in dark mode) -->
+            <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </button>
+        <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center text-gray-900 dark:text-gray-100 transition-colors duration-300">
+            vxcyber
+        </h1>
+        <p class="mt-4 text-xl text-gray-600 dark:text-gray-400 transition-colors duration-300">
+            
+        </p>
+    </div>
+
+    <script>
+        // Check for dark mode preference on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check localStorage and system preference
+            const savedMode = localStorage.getItem('darkMode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const darkModeEnabled = savedMode ? savedMode === 'true' : prefersDark;
+
+            // Apply initial dark mode state
+            if (darkModeEnabled) {
+                document.documentElement.classList.add('dark');
+            }
+
+            // Set up dark mode toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.addEventListener('click', function() {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('darkMode', isDark.toString());
+            });
+
+            // Listen for system dark mode changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (localStorage.getItem('darkMode') === null) {
+                    document.documentElement.classList.toggle('dark', e.matches);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
